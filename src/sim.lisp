@@ -53,7 +53,3 @@
     (loop while (< (iter bamboo) iter-max) do
       (iterate sim)
       (save-curstate sim))))
-
-(defmethod report-history ((sim sim))
-  "Return a copy of the history."
-  (alexandria:copy-array (history sim)))

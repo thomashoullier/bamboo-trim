@@ -6,4 +6,5 @@
            #:history
            #:state-iter
            #:state-heights
-           #:state-choice))
+           #:state-choice
+           #:history-tofile))
