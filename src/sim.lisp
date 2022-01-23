@@ -9,32 +9,47 @@
    (iter-max
     :documentation "Maximum iteration number to run the simulation for."
     :accessor iter-max :initarg :iter-max)
-   (history :documentation "Struct holding simulation data for analysis."
+   (history :documentation "Vector holding state history for analysis."
             :accessor history :initarg :history)))
 
-(defstruct history
-  iters ; vector of iteration indices #(i1 i2 i3 ...)
-  heights ; corresponding bamboo heights #(#(h1 h2 h3 ...) (h1 h2 h3 ...))
-  choices ; index of bamboo to cut down at the end of iter #(b1 b2 b3 ...)
+(defstruct state
+  iter ; Current iteration index
+  heights ; corresponding bamboo heights #(h1 h2 h3 ...)
+  choice ; index of bamboo to cut down at the end of iter current iter
   )
 
 (defun make-sim (rates algorithm iter-max)
   "Simulation constructor."
-
-  )
+  (let* ((bamboo (make-bamboo rates))
+         (cutter (make-cutter algorithm bamboo)))
+    (choose cutter) ; Choose the first bamboo to cut down.
+    (make-instance 'sim :bamboo bamboo :cutter cutter
+                        :iter-max iter-max
+                        :history (make-array 0 :fill-pointer 0))))
 
 (defmethod save-curstate ((sim sim))
   "Append current problem status to history."
-
-  )
+  (with-slots ((history history) (bamboo bamboo) (cutter cutter)) sim
+    (vector-push-extend
+     (make-state :iter (iter bamboo)
+                 :heights (alexandria:copy-array (heights bamboo))
+                 :choice (chosen-bamboo cutter))
+     history)))
 
 (defmethod iterate ((sim sim))
   "Run the next simulation iteration."
-
-  )
+  (with-slots ((bamboo bamboo)
+               (cutter cutter)) simd-pack
+    (cut bamboo (chosen-bamboo cutter)) ; Cut the bamboo chosen by cutter.
+    (grow bamboo) ; Grow all the bamboos.
+    (choose cutter) ; Select the next bamboo to cut.
+    ))
 
 (defmethod run-sim ((sim sim))
   "Run the simulation for the planned number of iterations and store
    analysis data."
-
-  )
+  (save-curstate sim) ; Save first iteration.
+  (with-slots ((bamboo bamboo) (iter-max iter-max)) sim
+    (loop while (< (iter bamboo) iter-max) do
+      (iterate sim)
+      (save-curstate sim))))
