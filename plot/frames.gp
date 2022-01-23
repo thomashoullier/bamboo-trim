@@ -22,7 +22,7 @@ unset label
 set output sprintf("frames/%05.0f.png", iter[it])
 
 set title sprintf("i = %d", iter[it])
-set label 1 "↓" at choice[it],max_height
+set label 1 "↓" at choice[it],max_height font ",24"
 plot for [i=3:sim_columns] FILE index 1 every ::(it-1)::(it-1) \
      using (i-3):(column(i)) with impulses lc 1 lw 3
 }
