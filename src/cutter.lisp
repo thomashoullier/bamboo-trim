@@ -8,9 +8,9 @@
    (chosen-bamboo :documentation "Index of bamboo to cut down."
                   :accessor chosen-bamboo :initarg :chosen-bamboo)))
 
-(defmacro make-cutter (algorithm bamboo)
+(defun make-cutter (algorithm bamboo)
   "Create a solver for bamboo problem instance with given algorithm."
-  (make-instance algorithm :bamboo ,bamboo :chosen-bamboo ,nil))
+  (make-instance algorithm :bamboo bamboo :chosen-bamboo nil))
 
 (defgeneric choose (cutter)
   (:documentation "Set the index of the bamboo to cut down.

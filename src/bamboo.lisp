@@ -9,12 +9,16 @@
    (iter :documentation "Iteration number: incremented after growing."
          :reader iter :initarg :iter)))
 
+(defun check-rates (rates)
+  "Check that rates do indeed add up to 1."
+  (let ((sum (reduce #'+ rates)))
+    (when (/= sum 1) (error "bamboo: the rates do not add to 1."))))
+
 (defun make-bamboo (rates)
   "Bamboo constructor. Starts at iter = 1, the bamboos have grown once."
-  (let* ((n (length rates))
-         (heights (alexandria:copy-array rates)))
-    (make-instance 'bamboo :rates (alexandria:copy-array rates)
-                           :heights heights :iter 1)))
+  (check-rates rates)
+  (make-instance 'bamboo :rates (alexandria:copy-array rates)
+                         :heights (alexandria:copy-array rates) :iter 1))
 
 ;;; Problem operations
 (defmethod grow ((bamboo bamboo))

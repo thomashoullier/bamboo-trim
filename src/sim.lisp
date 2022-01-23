@@ -39,7 +39,7 @@
 (defmethod iterate ((sim sim))
   "Run the next simulation iteration."
   (with-slots ((bamboo bamboo)
-               (cutter cutter)) simd-pack
+               (cutter cutter)) sim
     (cut bamboo (chosen-bamboo cutter)) ; Cut the bamboo chosen by cutter.
     (grow bamboo) ; Grow all the bamboos.
     (choose cutter) ; Select the next bamboo to cut.
@@ -53,3 +53,7 @@
     (loop while (< (iter bamboo) iter-max) do
       (iterate sim)
       (save-curstate sim))))
+
+(defmethod report-history ((sim sim))
+  "Return a copy of the history."
+  (alexandria:copy-array (history sim)))
