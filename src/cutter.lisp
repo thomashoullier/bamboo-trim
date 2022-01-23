@@ -4,16 +4,18 @@
 ;;; Cutter superclass
 (defclass cutter ()
   ((bamboo :documentation "Bamboo problem instance reference."
-           :reader bamboo :initarg :bamboo)))
+           :reader bamboo :initarg :bamboo)
+   (chosen-bamboo :documentation "Index of bamboo to cut down."
+                  :accessor chosen-bamboo :initarg :chosen-bamboo)))
 
 (defmacro make-cutter (algorithm bamboo)
   "Create a solver for bamboo problem instance with given algorithm."
-  (make-instance algorithm :bamboo ,bamboo))
+  (make-instance algorithm :bamboo ,bamboo :chosen-bamboo ,nil))
 
-(defgeneric choose ()
-  (:documentation "Return the index of the bamboo to cut down.
+(defgeneric choose (cutter)
+  (:documentation "Set the index of the bamboo to cut down.
                    nil if none to cut")
-  (:method () nil))
+  (:method (cutter) (setf (chosen-bamboo cutter) nil)))
 
 ;;; Reduce-Max algorithm
 (defclass reduce-max (cutter)
@@ -29,7 +31,7 @@
 
 (defmethod choose ((reduce-max reduce-max))
   "Apply reduce-max to current problem iteration."
-  (find-max-pos (bamboo reduce-max)))
+  (setf (chosen-bamboo reduce-max) (find-max-pos (bamboo reduce-max))))
 
 ;;; Reduce-Fastest(x) algorithm
 
