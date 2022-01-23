@@ -7,4 +7,8 @@
            #:state-iter
            #:state-heights
            #:state-choice
-           #:history-tofile))
+           #:analysis
+           #:analysis-max-height
+           #:analysis-max-height-iter
+           #:analysis-max-bamboo
+           #:sim-tofile))

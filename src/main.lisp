@@ -11,5 +11,6 @@
 (bamboo-trim:run-sim *sim1*)
 (defparameter *res1* (bamboo-trim:history *sim1*))
 (format t "~&~A~%" *res1*)
+(format t "~&~A~%" (bamboo-trim:analysis *sim1*))
 
-(bamboo-trim:history-tofile *sim1* (merge-pathnames #P"sim1.txt" *data-dir*))
+(bamboo-trim:sim-tofile *sim1* (merge-pathnames #P"sim1.txt" *data-dir*))
