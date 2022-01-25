@@ -25,6 +25,9 @@
   (with-open-file (str filename :direction :output
                                 :if-exists :supersede
                                 :if-does-not-exist :create)
+    (format str "# Bamboo rates~%~{~A~^ ~}~%~%~%"
+            (map 'list (lambda (x) (write-to-string (coerce x 'float)))
+                 (rates (bamboo sim))))
     (format str "# Maximum bamboo height~%~A~%~%~%"
             (write-to-string (coerce (analysis-max-height (analysis sim))
                                      'float)))
