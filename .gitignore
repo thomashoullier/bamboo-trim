@@ -9,3 +9,4 @@
 
 *.txt
 plot/frames/*.png
+plot/output.webm
