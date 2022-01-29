@@ -28,7 +28,7 @@ Let two bamboos with rates h1 = 1-ε, h2 = ε. The gardener tries to minimize
 the backlog by cutting the tallest bamboo at the end of each time interval
 (*Reduce-Max* algorithm).
 
-![Lower bound illustration][doc/lower-bound.webm]
+![Lower bound illustration](doc/lower-bound.webm)
 
 The gardener keeps the fastest-growing bamboo in check until he has to skip a
 beat to cut the other bamboo. The backlog achieved is 2\*h1 = 2-2\*ε.
