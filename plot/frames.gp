@@ -1,7 +1,7 @@
 #!/bin/gnuplot
 # Generate frames from history.
 
-set terminal png truecolor size 500, 300
+set terminal png truecolor size 500, 300 font "Cousine"
 
 FILE = 'sim.txt'
 stats FILE index 1 using (max_height = $1) nooutput
