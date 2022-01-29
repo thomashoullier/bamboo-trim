@@ -37,7 +37,8 @@ set output sprintf("frames/%05.0f.png", iter[it])
 
 set title sprintf("Rates:%s; it = %d", rates_str, iter[it])
 set label 1 "↓" at choice[it],(max_height*1.01) font ",24" center
-plot rates using ($1 - 1):2 with impulses lc 2 lw 5, \
+plot for [i=3:sim_columns] FILE index 2 every ::(it-1)::(it-1) \
+     using (i-3):(column(i) + rates[i-2]) with impulses lc 2 lw 3, \
      for [i=3:sim_columns] FILE index 2 every ::(it-1)::(it-1) \
      using (i-3):(column(i)) with impulses lc 1 lw 3
 }
