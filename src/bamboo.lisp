@@ -30,4 +30,4 @@
 (defmethod cut ((bamboo bamboo) i)
   "Cut down the chosen bamboo to zero. Indexed from 0."
   (with-slots ((heights heights)) bamboo
-    (setf (aref heights i) 0)))
+    (when i (setf (aref heights i) 0))))

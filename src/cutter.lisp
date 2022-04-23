@@ -8,6 +8,8 @@
    (chosen-bamboo :documentation "Index of bamboo to cut down."
                   :accessor chosen-bamboo :initarg :chosen-bamboo)))
 
+;;TODO: Accommodate algorithms with additional parameters,
+;;      Take a keyword list as argument: (:x 2) for example. &rest?
 (defun make-cutter (algorithm bamboo)
   "Create a solver for bamboo problem instance with given algorithm."
   (make-instance algorithm :bamboo bamboo :chosen-bamboo nil))
@@ -34,5 +36,9 @@
   (setf (chosen-bamboo reduce-max) (find-max-pos (bamboo reduce-max))))
 
 ;;; Reduce-Fastest(x) algorithm
+(defclass reduce-fastest-x (cutter)
+  ((x :documentation
+      "Reduce-Fastest(x) parameter: minimum bamboo height to consider"
+      :reader x :initarg :x)))
 
 ;;; Deadline-Driven Strategy
